@@ -5,7 +5,7 @@ description = "Django boilerplate to use as a fast starter point"
 authors = ["Alex <alopezariguel@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "poetry add django@5"}]
+packages = [{ include = "config"}]
 
 [tool.poetry.dependencies]
 python = "^3.12.10"
