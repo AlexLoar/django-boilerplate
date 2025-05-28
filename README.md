@@ -49,5 +49,5 @@ This project uses [Poetry](https://python-poetry.org/) as the package manager.
 
 ### Code style
 
-- [mypy](https://github.com/python/mypy): A static type checker.
+- [ty](https://github.com/astral-sh/ty): A static type checker.
 - [ruff](https://github.com/astral-sh/ruff): An extremely fast Python linter, written in Rust.

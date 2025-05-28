@@ -42,3 +42,5 @@ LOGGING = {
         },
     },
 }
+
+SECRET_KEY = "TEST-SECRET_KEY"
