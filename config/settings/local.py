@@ -7,7 +7,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")  # noqa F405
+SECRET_KEY = os.getenv("SECRET_KEY")  # noqa F405
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
