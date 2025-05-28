@@ -3,7 +3,7 @@
 
 - This repository serves as a quick starting point for Django projects.
 - The project uses Python 3.12.
-- A [Github Action](https://github.com/AlexLoar/django-boilerplate/actions/) is configured to run on every push to the `main branch.
+- A [Github Action](https://github.com/AlexLoar/django-boilerplate/actions/) is configured to run on every push to the `main` branch.
 
 ## Requirements
 
@@ -11,7 +11,7 @@
 
 ## Folder structure
 
-- The tests` folder contains the test files.
+- The `tests` folder contains the test files.
 - To add new tests, please follow the [pytest](https://docs.pytest.org/en/7.1.x/getting-started.html) recommendations.
 - The production code goes inside the `src` folder.
 - Inside the `scripts` folder you can find the git hooks files.
