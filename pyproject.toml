@@ -1,0 +1,53 @@
+[tool.poetry]
+name = "django-boilerplate"
+version = "0.1.0"
+description = "Django boilerplate to use as a fast starter point"
+authors = ["Alex <alopezariguel@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "poetry add django@5"}]
+
+[tool.poetry.dependencies]
+python = "^3.12.10"
+django = "5.2.1"
+psycopg2-binary = "^2.9.10"
+django-environ = "^0.12.0"
+djangorestframework = "^3.16.0"
+django-redis = "^5.4.0"
+redis = "^6.1.0"
+celery = "^5.5.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11.11"
+pytest = "^8.3.5"
+pytest-django = "^4.11.1"
+mypy = "^1.15.0"
+factory-boy = "^3.3.3"
+pytest-xdist = "^3.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+exclude = ["**/migrations/**", "scripts/*"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "N",  # PEP8 naming
+    "UP",  # pyupgrade
+    "ARG001", # unused arguments in functions
+]
+
+[tool.pytest.ini_options]
+addopts = "--nomigrations --ds=config.settings.test"
+python_files = "test_*.py tests.py"
