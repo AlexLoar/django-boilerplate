@@ -41,11 +41,11 @@ lint: ## Lints the code format
 
 .PHONY: pre-requirements  check-format
 check-format:  ## Check format python code
-	poetry run ruff format
+	poetry run ruff format --check
 
 .PHONY: pre-requirements  format
 format:  ## Format python code
-	poetry run ruff format --check
+	poetry run ruff format
 
 .PHONY: pre-requirements  test
 test: ## Run tests
