@@ -3,12 +3,12 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python 3.12
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: "3.12"
       - name: Install dependencies
@@ -23,4 +23,4 @@ jobs:
           make check-format
       - name: Tests
         run: |
-          make test
+          make test-local
