@@ -17,6 +17,7 @@ redis = "^6.1.0"
 celery = "^5.5.2"
 django-celery-beat = "^2.8.1"
 django-celery-results = "^2.6.0"
+flower = "^2.0.1"
 
 
 [tool.poetry.group.dev.dependencies]

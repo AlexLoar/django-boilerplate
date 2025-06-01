@@ -1,5 +1,6 @@
-from config.settings.base import *  # noqa F403
+import os
 
+from config.settings.base import *  # noqa F403
 
 TEST_RUNNER = "django.test.runner.DiscoverRunner"
 
@@ -24,8 +25,7 @@ CACHES = {
 }
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "test_media")  # noqa F405
-
-EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"  # noqa F405
+EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 
 LOGGING = {
     "version": 1,
@@ -44,3 +44,4 @@ LOGGING = {
 }
 
 SECRET_KEY = "TEST-SECRET_KEY"
+ALLOWED_HOSTS = ["*"]

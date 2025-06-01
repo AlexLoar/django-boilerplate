@@ -47,6 +47,10 @@ This project uses [Poetry](https://python-poetry.org/) as the package manager.
 - [pytest-django](https://pytest-django.readthedocs.io/en/latest/index.html): Pytest plugin with utilities for testing Django projects.
 - [factory-boy](https://factoryboy.readthedocs.io/en/stable/index.html): Factory library for generating test data.
 
+### Utility
+
+Since we are using Celery to run tasks we can also use [Flower](https://flower.readthedocs.io/en/latest/) to monitor them via its [Dashboard](http://localhost:5555/).
+
 ### Code style
 
 - [ty](https://github.com/astral-sh/ty): A static type checker.

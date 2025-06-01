@@ -41,13 +41,13 @@ files = [
 
 [[package]]
 name = "celery"
-version = "5.5.2"
+version = "5.5.3"
 description = "Distributed Task Queue."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "celery-5.5.2-py3-none-any.whl", hash = "sha256:54425a067afdc88b57cd8d94ed4af2ffaf13ab8c7680041ac2c4ac44357bdf4c"},
-    {file = "celery-5.5.2.tar.gz", hash = "sha256:4d6930f354f9d29295425d7a37261245c74a32807c45d764bedc286afd0e724e"},
+    {file = "celery-5.5.3-py3-none-any.whl", hash = "sha256:0b5761a07057acee94694464ca482416b959568904c9dfa41ce8413a7d65d525"},
+    {file = "celery-5.5.3.tar.gz", hash = "sha256:6c972ae7968c2b5281227f01c3a3f984037d21c5129d07bf3550cc2afc6b10a5"},
 ]
 
 [package.dependencies]
@@ -78,20 +78,20 @@ gcs = ["google-cloud-firestore (==2.20.1)", "google-cloud-storage (>=2.10.0)", "
 gevent = ["gevent (>=1.5.0)"]
 librabbitmq = ["librabbitmq (>=2.0.0)"]
 memcache = ["pylibmc (==1.6.3)"]
-mongodb = ["pymongo (==4.10.1)"]
-msgpack = ["msgpack (==1.1.0)"]
+mongodb = ["kombu[mongodb]"]
+msgpack = ["kombu[msgpack]"]
 pydantic = ["pydantic (>=2.4)"]
 pymemcache = ["python-memcached (>=1.61)"]
 pyro = ["pyro4 (==4.82)"]
 pytest = ["pytest-celery[all] (>=1.2.0,<1.3.0)"]
-redis = ["redis (>=4.5.2,!=4.5.5,<6.0.0)"]
+redis = ["kombu[redis]"]
 s3 = ["boto3 (>=1.26.143)"]
 slmq = ["softlayer_messaging (>=1.0.3)"]
 solar = ["ephem (==4.2)"]
-sqlalchemy = ["sqlalchemy (>=1.4.48,<2.1)"]
-sqs = ["boto3 (>=1.26.143)", "kombu[sqs] (>=5.3.4)", "urllib3 (>=1.26.16)"]
+sqlalchemy = ["kombu[sqlalchemy]"]
+sqs = ["boto3 (>=1.26.143)", "kombu[sqs] (>=5.5.0)", "urllib3 (>=1.26.16)"]
 tblib = ["tblib (>=1.3.0)", "tblib (>=1.5.0)"]
-yaml = ["PyYAML (>=3.10)"]
+yaml = ["kombu[yaml]"]
 zookeeper = ["kazoo (>=1.3.1)"]
 zstd = ["zstandard (==0.23.0)"]
 
@@ -330,6 +330,38 @@ files = [
 tzdata = "*"
 
 [[package]]
+name = "flower"
+version = "2.0.1"
+description = "Celery Flower"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "flower-2.0.1-py2.py3-none-any.whl", hash = "sha256:9db2c621eeefbc844c8dd88be64aef61e84e2deb29b271e02ab2b5b9f01068e2"},
+    {file = "flower-2.0.1.tar.gz", hash = "sha256:5ab717b979530770c16afb48b50d2a98d23c3e9fe39851dcf6bc4d01845a02a0"},
+]
+
+[package.dependencies]
+celery = ">=5.0.5"
+humanize = "*"
+prometheus-client = ">=0.8.0"
+pytz = "*"
+tornado = ">=5.0.0,<7.0.0"
+
+[[package]]
+name = "humanize"
+version = "4.12.3"
+description = "Python humanize utilities"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "humanize-4.12.3-py3-none-any.whl", hash = "sha256:2cbf6370af06568fa6d2da77c86edb7886f3160ecd19ee1ffef07979efc597f6"},
+    {file = "humanize-4.12.3.tar.gz", hash = "sha256:8430be3a615106fdfceb0b2c1b41c4c98c6b0fc5cc59663a5539b111dd325fb0"},
+]
+
+[package.extras]
+tests = ["freezegun", "pytest", "pytest-cov"]
+
+[[package]]
 name = "iniconfig"
 version = "2.1.0"
 description = "brain-dead simple config-ini parsing"
@@ -342,17 +374,18 @@ files = [
 
 [[package]]
 name = "kombu"
-version = "5.5.3"
+version = "5.5.4"
 description = "Messaging library for Python."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "kombu-5.5.3-py3-none-any.whl", hash = "sha256:5b0dbceb4edee50aa464f59469d34b97864be09111338cfb224a10b6a163909b"},
-    {file = "kombu-5.5.3.tar.gz", hash = "sha256:021a0e11fcfcd9b0260ef1fb64088c0e92beb976eb59c1dfca7ddd4ad4562ea2"},
+    {file = "kombu-5.5.4-py3-none-any.whl", hash = "sha256:a12ed0557c238897d8e518f1d1fdf84bd1516c5e305af2dacd85c2015115feb8"},
+    {file = "kombu-5.5.4.tar.gz", hash = "sha256:886600168275ebeada93b888e831352fe578168342f0d1d5833d88ba0d847363"},
 ]
 
 [package.dependencies]
 amqp = ">=5.1.1,<6.0.0"
+packaging = "*"
 tzdata = {version = ">=2025.2", markers = "python_version >= \"3.9\""}
 vine = "5.1.0"
 
@@ -363,7 +396,7 @@ confluentkafka = ["confluent-kafka (>=2.2.0)"]
 consul = ["python-consul2 (==0.1.5)"]
 gcpubsub = ["google-cloud-monitoring (>=2.16.0)", "google-cloud-pubsub (>=2.18.4)", "grpcio (==1.67.0)", "protobuf (==4.25.5)"]
 librabbitmq = ["librabbitmq (>=2.0.0)"]
-mongodb = ["pymongo (>=4.1.1)"]
+mongodb = ["pymongo (==4.10.1)"]
 msgpack = ["msgpack (==1.1.0)"]
 pyro = ["pyro4 (==4.82)"]
 qpid = ["qpid-python (>=0.26)", "qpid-tools (>=0.26)"]
@@ -399,6 +432,20 @@ files = [
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["coverage", "pytest", "pytest-benchmark"]
+
+[[package]]
+name = "prometheus-client"
+version = "0.22.0"
+description = "Python client for the Prometheus monitoring system."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "prometheus_client-0.22.0-py3-none-any.whl", hash = "sha256:c8951bbe64e62b96cd8e8f5d917279d1b9b91ab766793f33d4dce6c228558713"},
+    {file = "prometheus_client-0.22.0.tar.gz", hash = "sha256:18da1d2241ac2d10c8d2110f13eedcd5c7c0c8af18c926e8731f04fc10cd575c"},
+]
+
+[package.extras]
+twisted = ["twisted"]
 
 [[package]]
 name = "prompt-toolkit"
@@ -582,6 +629,17 @@ files = [
 six = ">=1.5"
 
 [[package]]
+name = "pytz"
+version = "2025.2"
+description = "World timezone definitions, modern and historical"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pytz-2025.2-py2.py3-none-any.whl", hash = "sha256:5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00"},
+    {file = "pytz-2025.2.tar.gz", hash = "sha256:360b9e3dbb49a209c21ad61809c7fb453643e048b38924c765813546746e81c3"},
+]
+
+[[package]]
 name = "redis"
 version = "6.2.0"
 description = "Python client for Redis database and key-value store"
@@ -599,29 +657,29 @@ ocsp = ["cryptography (>=36.0.1)", "pyopenssl (>=20.0.1)", "requests (>=2.31.0)"
 
 [[package]]
 name = "ruff"
-version = "0.11.11"
+version = "0.11.12"
 description = "An extremely fast Python linter and code formatter, written in Rust."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "ruff-0.11.11-py3-none-linux_armv6l.whl", hash = "sha256:9924e5ae54125ed8958a4f7de320dab7380f6e9fa3195e3dc3b137c6842a0092"},
-    {file = "ruff-0.11.11-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:c8a93276393d91e952f790148eb226658dd275cddfde96c6ca304873f11d2ae4"},
-    {file = "ruff-0.11.11-py3-none-macosx_11_0_arm64.whl", hash = "sha256:d6e333dbe2e6ae84cdedefa943dfd6434753ad321764fd937eef9d6b62022bcd"},
-    {file = "ruff-0.11.11-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:7885d9a5e4c77b24e8c88aba8c80be9255fa22ab326019dac2356cff42089fc6"},
-    {file = "ruff-0.11.11-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:1b5ab797fcc09121ed82e9b12b6f27e34859e4227080a42d090881be888755d4"},
-    {file = "ruff-0.11.11-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:e231ff3132c1119ece836487a02785f099a43992b95c2f62847d29bace3c75ac"},
-    {file = "ruff-0.11.11-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:a97c9babe1d4081037a90289986925726b802d180cca784ac8da2bbbc335f709"},
-    {file = "ruff-0.11.11-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:d8c4ddcbe8a19f59f57fd814b8b117d4fcea9bee7c0492e6cf5fdc22cfa563c8"},
-    {file = "ruff-0.11.11-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:6224076c344a7694c6fbbb70d4f2a7b730f6d47d2a9dc1e7f9d9bb583faf390b"},
-    {file = "ruff-0.11.11-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:882821fcdf7ae8db7a951df1903d9cb032bbe838852e5fc3c2b6c3ab54e39875"},
-    {file = "ruff-0.11.11-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:dcec2d50756463d9df075a26a85a6affbc1b0148873da3997286caf1ce03cae1"},
-    {file = "ruff-0.11.11-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:99c28505ecbaeb6594701a74e395b187ee083ee26478c1a795d35084d53ebd81"},
-    {file = "ruff-0.11.11-py3-none-musllinux_1_2_i686.whl", hash = "sha256:9263f9e5aa4ff1dec765e99810f1cc53f0c868c5329b69f13845f699fe74f639"},
-    {file = "ruff-0.11.11-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:64ac6f885e3ecb2fdbb71de2701d4e34526651f1e8503af8fb30d4915a3fe345"},
-    {file = "ruff-0.11.11-py3-none-win32.whl", hash = "sha256:1adcb9a18802268aaa891ffb67b1c94cd70578f126637118e8099b8e4adcf112"},
-    {file = "ruff-0.11.11-py3-none-win_amd64.whl", hash = "sha256:748b4bb245f11e91a04a4ff0f96e386711df0a30412b9fe0c74d5bdc0e4a531f"},
-    {file = "ruff-0.11.11-py3-none-win_arm64.whl", hash = "sha256:6c51f136c0364ab1b774767aa8b86331bd8e9d414e2d107db7a2189f35ea1f7b"},
-    {file = "ruff-0.11.11.tar.gz", hash = "sha256:7774173cc7c1980e6bf67569ebb7085989a78a103922fb83ef3dfe230cd0687d"},
+    {file = "ruff-0.11.12-py3-none-linux_armv6l.whl", hash = "sha256:c7680aa2f0d4c4f43353d1e72123955c7a2159b8646cd43402de6d4a3a25d7cc"},
+    {file = "ruff-0.11.12-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:2cad64843da9f134565c20bcc430642de897b8ea02e2e79e6e02a76b8dcad7c3"},
+    {file = "ruff-0.11.12-py3-none-macosx_11_0_arm64.whl", hash = "sha256:9b6886b524a1c659cee1758140138455d3c029783d1b9e643f3624a5ee0cb0aa"},
+    {file = "ruff-0.11.12-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3cc3a3690aad6e86c1958d3ec3c38c4594b6ecec75c1f531e84160bd827b2012"},
+    {file = "ruff-0.11.12-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:f97fdbc2549f456c65b3b0048560d44ddd540db1f27c778a938371424b49fe4a"},
+    {file = "ruff-0.11.12-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:74adf84960236961090e2d1348c1a67d940fd12e811a33fb3d107df61eef8fc7"},
+    {file = "ruff-0.11.12-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:b56697e5b8bcf1d61293ccfe63873aba08fdbcbbba839fc046ec5926bdb25a3a"},
+    {file = "ruff-0.11.12-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:4d47afa45e7b0eaf5e5969c6b39cbd108be83910b5c74626247e366fd7a36a13"},
+    {file = "ruff-0.11.12-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:692bf9603fe1bf949de8b09a2da896f05c01ed7a187f4a386cdba6760e7f61be"},
+    {file = "ruff-0.11.12-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:08033320e979df3b20dba567c62f69c45e01df708b0f9c83912d7abd3e0801cd"},
+    {file = "ruff-0.11.12-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:929b7706584f5bfd61d67d5070f399057d07c70585fa8c4491d78ada452d3bef"},
+    {file = "ruff-0.11.12-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:7de4a73205dc5756b8e09ee3ed67c38312dce1aa28972b93150f5751199981b5"},
+    {file = "ruff-0.11.12-py3-none-musllinux_1_2_i686.whl", hash = "sha256:2635c2a90ac1b8ca9e93b70af59dfd1dd2026a40e2d6eebaa3efb0465dd9cf02"},
+    {file = "ruff-0.11.12-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:d05d6a78a89166f03f03a198ecc9d18779076ad0eec476819467acb401028c0c"},
+    {file = "ruff-0.11.12-py3-none-win32.whl", hash = "sha256:f5a07f49767c4be4772d161bfc049c1f242db0cfe1bd976e0f0886732a4765d6"},
+    {file = "ruff-0.11.12-py3-none-win_amd64.whl", hash = "sha256:5a4d9f8030d8c3a45df201d7fb3ed38d0219bccd7955268e863ee4a115fa0832"},
+    {file = "ruff-0.11.12-py3-none-win_arm64.whl", hash = "sha256:65194e37853158d368e333ba282217941029a28ea90913c67e558c611d04daa5"},
+    {file = "ruff-0.11.12.tar.gz", hash = "sha256:43cf7f69c7d7c7d7513b9d59c5d8cafd704e05944f978614aa9faff6ac202603"},
 ]
 
 [[package]]
@@ -649,6 +707,27 @@ files = [
 [package.extras]
 dev = ["build", "hatch"]
 doc = ["sphinx"]
+
+[[package]]
+name = "tornado"
+version = "6.5.1"
+description = "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "tornado-6.5.1-cp39-abi3-macosx_10_9_universal2.whl", hash = "sha256:d50065ba7fd11d3bd41bcad0825227cc9a95154bad83239357094c36708001f7"},
+    {file = "tornado-6.5.1-cp39-abi3-macosx_10_9_x86_64.whl", hash = "sha256:9e9ca370f717997cb85606d074b0e5b247282cf5e2e1611568b8821afe0342d6"},
+    {file = "tornado-6.5.1-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:b77e9dfa7ed69754a54c89d82ef746398be82f749df69c4d3abe75c4d1ff4888"},
+    {file = "tornado-6.5.1-cp39-abi3-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:253b76040ee3bab8bcf7ba9feb136436a3787208717a1fb9f2c16b744fba7331"},
+    {file = "tornado-6.5.1-cp39-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:308473f4cc5a76227157cdf904de33ac268af770b2c5f05ca6c1161d82fdd95e"},
+    {file = "tornado-6.5.1-cp39-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:caec6314ce8a81cf69bd89909f4b633b9f523834dc1a352021775d45e51d9401"},
+    {file = "tornado-6.5.1-cp39-abi3-musllinux_1_2_i686.whl", hash = "sha256:13ce6e3396c24e2808774741331638ee6c2f50b114b97a55c5b442df65fd9692"},
+    {file = "tornado-6.5.1-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:5cae6145f4cdf5ab24744526cc0f55a17d76f02c98f4cff9daa08ae9a217448a"},
+    {file = "tornado-6.5.1-cp39-abi3-win32.whl", hash = "sha256:e0a36e1bc684dca10b1aa75a31df8bdfed656831489bc1e6a6ebed05dc1ec365"},
+    {file = "tornado-6.5.1-cp39-abi3-win_amd64.whl", hash = "sha256:908e7d64567cecd4c2b458075589a775063453aeb1d2a1853eedb806922f568b"},
+    {file = "tornado-6.5.1-cp39-abi3-win_arm64.whl", hash = "sha256:02420a0eb7bf617257b9935e2b754d1b63897525d8a289c9d65690d580b4dcf7"},
+    {file = "tornado-6.5.1.tar.gz", hash = "sha256:84ceece391e8eb9b2b95578db65e920d2a61070260594819589609ba9bc6308c"},
+]
 
 [[package]]
 name = "ty"
@@ -713,4 +792,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12.10"
-content-hash = "21eaff50c4c8e9fc54132cb1b505e5b060adf8f13a64f9fb16dc0be032c78365"
+content-hash = "6e7dde28fa4bf2371275d201cc52ef5ce3e07d6beeec111a5bed69c207c3fd15"

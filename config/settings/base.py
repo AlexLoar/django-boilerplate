@@ -20,12 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
-
-DEBUG = os.getenv("DEBUG", False)
-
-ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]
+DEBUG = os.getenv("DEBUG", default=False)
 
 
 # Application definition
@@ -45,7 +40,7 @@ THIRD_PARTY_APPS = [
     "django_celery_results",
 ]
 
-LOCAL_APPS = []
+LOCAL_APPS = ["src.foo_bar"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -134,3 +129,33 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# =============================================================================
+# CELERY CONFIGURATION
+# =============================================================================
+
+# Celery broker settings
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", default="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", default="redis://localhost:6379/0")
+
+# Celery task settings
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+# https://django-celery-results.readthedocs.io/en/latest/getting_started.html
+CELERY_RESULT_EXTENDED = True
+CELERY_TIMEZONE = os.getenv("CELERY_TIMEZONE", default="UTC")
+
+# django-celery-beat
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+# Celery result backend settings
+CELERY_CACHE_BACKEND = "default"
+
+# Task execution settings
+CELERY_TASK_SOFT_TIME_LIMIT = os.getenv("CELERY_TASK_SOFT_TIME_LIMIT", default=300)  # 5 minutes
+CELERY_TASK_TIME_LIMIT = os.getenv("CELERY_TASK_TIME_LIMIT", default=600)  # 10 minutes
+CELERY_TASK_MAX_RETRIES = os.getenv("CELERY_TASK_MAX_RETRIES", default=3)
+CELERY_TASK_DEFAULT_RETRY_DELAY = os.getenv(
+    "CELERY_TASK_DEFAULT_RETRY_DELAY", default=60
+)  # 1 minute
