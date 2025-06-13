@@ -7,10 +7,6 @@
 - Includes Docker configuration for development.
 - Pre-configured with Celery and Redis for background tasks.
 
-## Requirements
-
-- You only need to have [Poetry](https://python-poetry.org/) installed.
-
 ## Folder structure
 
 - The `tests` folder contains the test files.
@@ -28,7 +24,7 @@ The project uses [Makefiles](https://www.gnu.org/software/make/manual/html_node/
 - `local-setup`: Install git hooks.
 - `install`: Install app packages with Poetry.
 - `update`: Update app packages.
-- `add-package package=XXX`: Install new package Example: make add-package package=requests.
+- `add-package package=XXX`: Install new package Example: `make add-package package=requests`.
 - `run`: Run Django development server locally
 
 ✅ Code Quality
@@ -38,7 +34,6 @@ The project uses [Makefiles](https://www.gnu.org/software/make/manual/html_node/
 - `check-typing`: Run static type analysis with ty.
 - `lint`: Fix code style issues automatically.
 - `format`: Format code automatically.
-- `test-local`: Run tests locally with Poetry (fastest)
 - `pre-commit`: Run all quality checks (lint, format, typing, tests)
 
 🐳 Docker Commands
