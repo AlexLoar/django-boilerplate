@@ -60,11 +60,18 @@ The project uses [Makefiles](https://www.gnu.org/software/make/manual/html_node/
 - `test`: Run tests in Docker (lightweight, no external services).
 - `test-local`: Run tests locally with Poetry.
 
+📊 Monitoring Commands
+
+- `health-check`: Check health of all services.
+- `monitoring-status`: Show Uptime Kuma status.
+- `monitoring-logs`: View Uptime Kuma logs.
+- `monitoring-backup`: Backup Uptime Kuma data.
+
 🧹 Utility Commands
 
 - `pyclean`: Clean temporary files and caches.
 - `env-example`: Create .env from template.
-help: Show all available commands
+- `help`: Show all available commands
 
 🔴 **Important: Please run the `make local-setup` command before starting development.**
 
@@ -83,6 +90,10 @@ This project uses [Poetry](https://python-poetry.org/) as the package manager.
 ### Utility
 
 Since we are using Celery to run tasks we can also use [Flower](https://flower.readthedocs.io/en/latest/) to monitor them via its [Dashboard](http://localhost:5555/).
+
+### Monitoring
+
+[Uptime Kuma](https://github.com/louislam/uptime-kuma) is an easy-to-use self-hosted monitoring tool.
 
 ### Code style
 
@@ -120,3 +131,9 @@ Since we are using Celery to run tasks we can also use [Flower](https://flower.r
 🌸 Flower
 
 - Real-time task monitoring
+
+📊 Uptime Kuma
+
+- Service health monitoring dashboard
+- Available at http://localhost:3001
+- Monitors all services and sends alerts

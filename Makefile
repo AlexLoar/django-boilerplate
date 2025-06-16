@@ -128,6 +128,34 @@ test:  ## Run tests in Docker
 	docker-compose run --rm app pytest -vv -n auto -ra --durations=5
 
 # =============================================================================
+# MONITORING COMMANDS
+# =============================================================================
+
+.PHONY: monitoring-status
+monitoring-status:  ## Show Uptime Kuma status
+	@echo "Uptime Kuma is available at: http://localhost:3001"
+	@docker-compose ps uptime-kuma
+
+.PHONY: monitoring-logs
+monitoring-logs:  ## View Uptime Kuma logs
+	docker-compose logs -f uptime-kuma
+
+.PHONY: monitoring-backup
+monitoring-backup:  ## Backup Uptime Kuma data
+	@echo "Creating Uptime Kuma backup..."
+	@docker run --rm -v $$(basename $$(pwd))_uptime-kuma-data:/data -v $$(pwd):/backup alpine tar czf /backup/uptime-kuma-backup-$$(date +%Y%m%d-%H%M%S).tar.gz -C /data .
+	@echo "✅ Backup created: uptime-kuma-backup-$$(date +%Y%m%d-%H%M%S).tar.gz"
+
+.PHONY: health-check
+health-check:  ## Check health of all services
+	@echo "🏥 Checking health of all services..."
+	@echo "Django App: " && curl -s http://localhost:8000/api/health/ | python -m json.tool || echo "❌ Failed"
+	@echo "\nPostgreSQL: " && docker-compose exec -T db pg_isready && echo "✅ Healthy" || echo "❌ Failed"
+	@echo "\nRedis: " && docker-compose exec -T redis redis-cli ping && echo "✅ Healthy" || echo "❌ Failed"
+	@echo "\nCelery: " && docker-compose exec -T celery celery -A config inspect ping && echo "✅ Healthy" || echo "❌ Failed"
+
+
+# =============================================================================
 # UTILITY COMMANDS
 # =============================================================================
 

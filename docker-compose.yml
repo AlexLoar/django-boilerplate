@@ -69,6 +69,12 @@ services:
       redis:
         condition: service_healthy
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "celery -A config inspect ping -d celery@$$HOSTNAME" ]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     env_file:
       - .env
 
@@ -108,7 +114,25 @@ services:
     env_file:
       - .env
 
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: django_uptime_kuma
+    volumes:
+      - uptime-kuma-data:/app/data
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    depends_on:
+      - app
+      - celery
+      - redis
+      - db
+      - flower
+    networks:
+      - default
+
 volumes:
   postgres_data:
   redis_data:
   static_volume:
+  uptime-kuma-data:
