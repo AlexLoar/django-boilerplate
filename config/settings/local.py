@@ -1,7 +1,7 @@
 from .base import *  # noqa F403
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG: bool = True
 
 # SECURITY WARNING: define the correct hosts in production!
 ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]  # noqa F405
