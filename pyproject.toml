@@ -27,7 +27,7 @@ pytest-django = "^4.11.1"
 factory-boy = "^3.3.3"
 pytest-xdist = "^3.7.0"
 
-ty = "^0.0.1a25"
+ty = "^0.0.1a33"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
