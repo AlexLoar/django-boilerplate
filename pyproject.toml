@@ -22,7 +22,7 @@ flower = "^2.0.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.14.2"
-pytest = "^8.4.2"
+pytest = "^9.0.2"
 pytest-django = "^4.11.1"
 factory-boy = "^3.3.3"
 pytest-xdist = "^3.7.0"
