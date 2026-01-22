@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := help
+DC ?= docker compose
 
 .PHONY: help
 help:  ## Show this help.
@@ -74,39 +75,39 @@ test-local: pre-requirements  ## Run tests locally with uv
 
 .PHONY: build
 build:  ## Build Docker images
-	docker-compose build
+	$(DC) build
 
 .PHONY: up
 up:  ## Build and start all Docker services
-	docker-compose up --build --remove-orphans
+	$(DC) up --build --remove-orphans
 
 .PHONY: up-d
 up-d:  ## Build and start all Docker services in background
-	docker-compose up --build --remove-orphans -d
+	$(DC) up --build --remove-orphans -d
 
 .PHONY: stop
 stop:  ## Stop Docker services
-	docker-compose stop
+	$(DC) stop
 
 .PHONY: down
 down:  ## Stop and remove all Docker containers
-	docker-compose down
+	$(DC) down
 
 .PHONY: down-v
 down-v:  ## Stop and remove all Docker containers with volumes
-	docker-compose down -v
+	$(DC) down -v
 
 .PHONY: restart
 restart:  ## Restart all Docker services
-	docker-compose restart
+	$(DC) restart
 
 .PHONY: logs
 logs:  ## Show logs for all services
-	docker-compose logs -f
+	$(DC) logs -f
 
 .PHONY: ps
 ps:  ## Show running Docker containers
-	docker-compose ps
+	$(DC) ps
 
 # =============================================================================
 # DJANGO COMMANDS
@@ -114,23 +115,23 @@ ps:  ## Show running Docker containers
 
 .PHONY: migrate
 migrate:  ## Run Django migrations in Docker
-	docker-compose run --rm app python manage.py migrate
+	$(DC) run --rm app python manage.py migrate
 
 .PHONY: makemigrations
 makemigrations:  ## Create Django migrations in Docker
-	docker-compose run --rm app python manage.py makemigrations
+	$(DC) run --rm app python manage.py makemigrations
 
 .PHONY: createsuperuser
 createsuperuser:  ## Create Django superuser in Docker
-	docker-compose run --rm app python manage.py createsuperuser
+	$(DC) run --rm app python manage.py createsuperuser
 
 .PHONY: collectstatic
 collectstatic:  ## Collect static files in Docker
-	docker-compose run --rm app python manage.py collectstatic --noinput
+	$(DC) run --rm app python manage.py collectstatic --noinput
 
 .PHONY: test
 test:  ## Run tests in Docker
-	docker-compose run --rm app sh -c "uv sync --dev && uv run pytest -vv -n auto -ra --durations=5"
+	$(DC) run --rm app sh -c "uv sync --dev && uv run pytest -vv -n auto -ra --durations=5"
 
 # =============================================================================
 # UTILITY COMMANDS
