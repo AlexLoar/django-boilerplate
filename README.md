@@ -22,9 +22,10 @@ The project uses [Makefiles](https://www.gnu.org/software/make/manual/html_node/
 🏠 Local Development
 
 - `local-setup`: Install git hooks.
-- `install`: Install app packages with Poetry.
+- `install`: Install app packages with uv.
 - `update`: Update app packages.
 - `add-package package=XXX`: Install new package Example: `make add-package package=requests`.
+- `add-dev-package package=XXX`: Install a new development package.
 - `run`: Run Django development server locally
 
 ✅ Code Quality
@@ -58,7 +59,7 @@ The project uses [Makefiles](https://www.gnu.org/software/make/manual/html_node/
 🧪 Testing Commands
 
 - `test`: Run tests in Docker (lightweight, no external services).
-- `test-local`: Run tests locally with Poetry.
+- `test-local`: Run tests locally with uv.
 
 🧹 Utility Commands
 
@@ -72,7 +73,7 @@ _You must pass the pre-commit checks—which include formatting and testing—to
 
 ## Packages
 
-This project uses [Poetry](https://python-poetry.org/) as the package manager.
+This project uses [uv](https://docs.astral.sh/uv/) as the package manager.
 
 ### Testing
 

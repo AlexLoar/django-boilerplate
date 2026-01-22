@@ -19,21 +19,26 @@ local-setup: pre-requirements  ## Install hooks and packages
 
 .PHONY: install
 install: pre-requirements  ## Install the app packages
-	rm -rf poetry.lock
-	poetry install
+	uv sync
 
 .PHONY: update
 update: pre-requirements  ## Updates the app packages
-	poetry update
+	uv lock --upgrade
+	uv sync
 
 .PHONY: add-package
 add-package: pre-requirements  ## Installs a new package in the app. ex: make add-package package=XXX
-	poetry add $(package)
-	poetry install
+	uv add $(package)
+	uv sync
+
+.PHONY: add-dev-package
+add-dev-package: pre-requirements  ## Installs a new dev package in the app. ex: make add-dev-package package=XXX
+	uv add --dev $(package)
+	uv sync
 
 .PHONY: run
 run: pre-requirements  ## Run the Django development server locally
-	poetry run python manage.py runserver
+	uv run python manage.py runserver
 
 # =============================================================================
 # CODE QUALITY
@@ -41,27 +46,27 @@ run: pre-requirements  ## Run the Django development server locally
 
 .PHONY: check-typing
 check-typing: pre-requirements  ## Run a static analyzer over the code to find issues
-	poetry run ty check
+	uv run ty check
 
 .PHONY: check-lint
 check-lint: pre-requirements  ## Checks the code style
-	poetry run ruff check
+	uv run ruff check
 
 .PHONY: lint
 lint: pre-requirements  ## Lints and fixes the code format
-	poetry run ruff check --fix
+	uv run ruff check --fix
 
 .PHONY: check-format
 check-format: pre-requirements  ## Check format python code
-	poetry run ruff format --check
+	uv run ruff format --check
 
 .PHONY: format
 format: pre-requirements  ## Format python code
-	poetry run ruff format
+	uv run ruff format
 
 .PHONY: test-local
-test-local: pre-requirements  ## Run tests locally with Poetry
-	poetry run pytest -vv -n auto -ra --durations=5
+test-local: pre-requirements  ## Run tests locally with uv
+	uv run pytest -vv -n auto -ra --durations=5
 
 # =============================================================================
 # DOCKER COMMANDS
@@ -125,7 +130,7 @@ collectstatic:  ## Collect static files in Docker
 
 .PHONY: test
 test:  ## Run tests in Docker
-	docker-compose run --rm app pytest -vv -n auto -ra --durations=5
+	docker-compose run --rm app sh -c "uv sync --dev && uv run pytest -vv -n auto -ra --durations=5"
 
 # =============================================================================
 # UTILITY COMMANDS
@@ -149,7 +154,7 @@ env-example:  ## Copy .env.example to .env if .env doesn't exist
 	fi
 
 .PHONY: pre-commit
-pre-commit: pre-requirements check-lint check-format check-typing test
+pre-commit: pre-requirements check-lint check-format check-typing test-local
 
 .PHONY: pre-push
 pre-push: test

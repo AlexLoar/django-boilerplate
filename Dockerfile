@@ -3,9 +3,12 @@ FROM python:3.12-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV POETRY_NO_INTERACTION=1
-ENV POETRY_VENV_IN_PROJECT=1
-ENV POETRY_CACHE_DIR=/opt/poetry-cache
+ENV UV_CACHE_DIR=/tmp/uv-cache
+
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv
 
 # Install system dependencies
 RUN apt-get update \
@@ -16,19 +19,17 @@ RUN apt-get update \
         git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install poetry
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /app
 
 ENV PYTHONPATH=/app/src:$PYTHONPATH
 
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml uv.lock ./
 
-# Configure poetry
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-root \
-    && pip install flower \
-    && rm -rf $POETRY_CACHE_DIR
+RUN mkdir -p /opt/venv \
+    && uv sync --no-dev --no-install-project \
+    && rm -rf /tmp/uv-cache
 
 # Copy project
 COPY . .
@@ -38,7 +39,8 @@ RUN addgroup --system django \
     && adduser --system --ingroup django django
 
 # Change ownership of the app directory
-RUN chown -R django:django /app
+RUN chown -R django:django /app /opt/venv
+
 USER django
 
 EXPOSE 8000

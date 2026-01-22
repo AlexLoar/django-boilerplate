@@ -1,36 +1,41 @@
-[tool.poetry]
+[project]
 name = "django-boilerplate"
 version = "0.1.0"
 description = "Django boilerplate to use as a fast starter point"
-authors = ["Alex <alopezariguel@gmail.com>"]
-license = "MIT"
 readme = "README.md"
-packages = [{ include = "config"}]
+license = { text = "MIT" }
+authors = [
+    { name = "Alex", email = "alopezariguel@gmail.com" },
+]
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "django==5.2.10",
+    "psycopg2-binary>=2.9.11,<3.0.0",
+    "djangorestframework>=3.16.1,<4.0.0",
+    "django-redis>=6.0.0,<7.0.0",
+    "redis>=7.0.1,<8.0.0",
+    "celery>=5.6.2,<6.0.0",
+    "django-celery-beat>=2.8.1,<3.0.0",
+    "django-celery-results>=2.6.0,<3.0.0",
+    "flower>=2.0.1,<3.0.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.12.10"
-django = "5.2.10"
-psycopg2-binary = "^2.9.11"
-djangorestframework = "^3.16.1"
-django-redis = "^6.0.0"
-redis = "^7.0.1"
-celery = "^5.6.2"
-django-celery-beat = "^2.8.1"
-django-celery-results = "^2.6.0"
-flower = "^2.0.1"
+[dependency-groups]
+dev = [
+    "ruff>=0.14.13,<0.15.0",
+    "pytest>=9.0.2,<10.0.0",
+    "pytest-django>=4.11.1,<5.0.0",
+    "factory-boy>=3.3.3,<4.0.0",
+    "pytest-xdist>=3.7.0,<4.0.0",
+    "ty>=0.0.12,<0.1.0",
+]
 
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.14.13"
-pytest = "^9.0.2"
-pytest-django = "^4.11.1"
-factory-boy = "^3.3.3"
-pytest-xdist = "^3.7.0"
-
-ty = "^0.0.12"
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["config"]
 
 [tool.ruff]
 target-version = "py312"
